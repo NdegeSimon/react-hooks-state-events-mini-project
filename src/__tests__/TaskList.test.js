@@ -1,18 +1,16 @@
-import React from "react";
-import Task from "./Task";
+import { render } from "@testing-library/react";
+import TaskList from "../components/TaskList";
+import { TASKS } from "../data";
 
-function TaskList({ tasks, onDeleteTask }) {
-  return (
-    <div className="tasks">
-      {tasks.map(task => (
-        <Task 
-          key={task.text} 
-          task={task} 
-          onDeleteTask={onDeleteTask}
-        />
-      ))}
-    </div>
-  );
-}
+describe("TaskList Component", () => {
+  test("displays all items when initially rendered", () => {
+    const mockDeleteTask = jest.fn();
+    const { getAllByTestId } = render(
+      <TaskList tasks={TASKS} onDeleteTask={mockDeleteTask} />
+    );
 
-export default TaskList;
+    // Verify the correct number of tasks are rendered
+    const taskElements = getAllByTestId("task");
+    expect(taskElements).toHaveLength(TASKS.length);
+  });
+});
