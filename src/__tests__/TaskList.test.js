@@ -1,9 +1,18 @@
-import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
-import TaskList from "../components/TaskList";
-import { TASKS } from "../data";
+import React from "react";
+import Task from "./Task";
 
-test("displays all items when initially rendered", () => {
-  const { container } = render(<TaskList tasks={TASKS} />);
-  expect(container.querySelectorAll(".task")).toHaveLength(TASKS.length);
-});
+function TaskList({ tasks, onDeleteTask }) {
+  return (
+    <div className="tasks">
+      {tasks.map(task => (
+        <Task 
+          key={task.text} 
+          task={task} 
+          onDeleteTask={onDeleteTask}
+        />
+      ))}
+    </div>
+  );
+}
+
+export default TaskList;
